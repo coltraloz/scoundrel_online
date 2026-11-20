@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Knight's Dungeon</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>⚔ Knight's Dungeon ⚔</h1>
+    <div id="hud">
+      <button id="howto-btn" class="hud-item howto-btn">📜 How to Play</button>
+      <span class="hud-item" id="deck-hud">🃏 Deck: 52</span>
+      <span class="hud-item" id="grave-hud">🪦 Graveyard: 0</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- The room: 4 cards -->
+    <section id="room-panel">
+      <h2>Room <span id="turn-info"></span></h2>
+      <div id="room"></div>
+    </section>
+
+    <!-- Action buttons -->
+    <section id="actions-panel">
+      <div id="actions"></div>
+      <button id="skip-btn" class="action-btn secondary">Skip Room</button>
+
+      <!-- Equipped weapon (right below the skip button) -->
+      <div id="weapon-panel">
+        <h2>Weapon</h2>
+        <div id="weapon-row">
+          <div id="weapon-slot" class="empty">No weapon equipped</div>
+          <div id="weapon-stack"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HP d20 die -->
+    <section id="hp-panel">
+      <h2>Vitality</h2>
+      <div id="d20">
+        <div id="d20-numbers"></div>
+        <div id="d20-pointer"></div>
+        <div id="d20-core"><span id="d20-value">20</span><small>HP</small></div>
+      </div>
+    </section>
+
+    <!-- Log -->
+    <section id="log-panel">
+      <h2>Adventure Log</h2>
+      <ul id="log"></ul>
+    </section>
+
+    <!-- Graveyard -->
+    <section id="grave-panel">
+      <h2>Graveyard</h2>
+      <div id="grave-pile"></div>
+    </section>
+  </main>
+
+  <!-- How to play modal -->
+  <div id="howto-modal" hidden>
+    <div id="howto-box">
+      <h2>📜 How to Play</h2>
+      <div id="howto-content">
+        <p><strong>Goal:</strong> clear all 52 cards of the dungeon before losing your 20 lives.</p>
+        <h3>Cards</h3>
+        <ul>
+          <li><strong>♠ Spades / ♣ Clubs — Monsters:</strong> deal damage equal to their value (J=11, Q=12, K=13, A=14). Fight them with your weapon (reduced damage) or barehanded (full damage). Monsters fought with a weapon stack on it; barehanded ones go straight to the graveyard.</li>
+          <li><strong>♥ Hearts — Potions:</strong> heal that many lives, up to 20, then go to the graveyard.</li>
+          <li><strong>♦ Diamonds — Weapons:</strong> equip one at a time. It reduces damage from monsters, but cannot block a monster worth more than the last one it defeated. Durability shows the highest monster it can block (∞ = any). Equipping a new weapon sends the old one and its stack to the graveyard.</li>
+        </ul>
+        <h3>Rooms</h3>
+        <ul>
+          <li>A room has 4 cards. Interact with 3 of them to clear it; the untouched card carries into the next room and 3 new cards are dealt.</li>
+          <li><strong>Skip Room</strong> returns all 4 cards to the bottom of the deck (right to left). It can't be used twice in a row or after acting this turn.</li>
+        </ul>
+        <h3>Scoring</h3>
+        <ul>
+          <li><strong>Death:</strong> negative sum of monster values left in the deck and room.</li>
+          <li><strong>Victory:</strong> lives remaining. A perfect 20-life win adds the value of the strongest potion left in the final room.</li>
+        </ul>
+      </div>
+      <button id="howto-close-btn" class="action-btn secondary">Close</button>
+    </div>
+  </div>
+
+  <!-- End game modal -->
+  <div id="modal" hidden>
+    <div id="modal-box">
+      <h2 id="modal-title"></h2>
+      <p id="modal-score"></p>
+      <p id="modal-detail"></p>
+      <button id="restart-btn">Play Again</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
